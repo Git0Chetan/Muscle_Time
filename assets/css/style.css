@@ -1382,3 +1382,13 @@ body {
   .footer-top .container { grid-template-columns: 1fr 0.6fr 0.9fr 1fr; }
 
 }
+
+.join{
+  display: none;
+}
+.join ul li{
+  background-color: aliceblue;
+  border-radius: 10px;
+  margin:3%;
+  width: 120%;
+}

@@ -52,3 +52,13 @@ window.addEventListener("scroll", function () {
     backTopBtn.classList.remove("active");
   }
 });
+
+let joi=document.getElementsByClassName("join")[0];
+function join(){
+  if(joi.style.display=="block"){
+    joi.style.display="none";
+  }
+  else{
+    joi.style.display="block";
+  }
+}
