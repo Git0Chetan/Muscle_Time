@@ -55,10 +55,26 @@ window.addEventListener("scroll", function () {
 
 let joi=document.getElementsByClassName("join")[0];
 function join(){
-  if(joi.style.display=="block"){
+  if(joi.style.display=="flex"){
     joi.style.display="none";
   }
   else{
-    joi.style.display="block";
+    joi.style.display="flex";
   }
 }
+
+let user=document.getElementById("user");
+let owner=document.getElementById("owner");
+let trainer=document.getElementById("trainer");
+
+user.addEventListener("click",function(){
+  alert("hello");
+});
+
+owner.addEventListener("click",function(){
+  alert("hello");
+});
+
+trainer.addEventListener("click",function(){
+  alert("hello");
+});

@@ -1385,9 +1385,12 @@ body {
 
 .join{
   display: none;
+  
 }
 .join ul li{
-  background-color: aliceblue;
+  background-color: rgb(6, 6, 6);
+  color: orangered;
+  border: 2px solid white;
   border-radius: 10px;
   margin:3%;
   width: 120%;
