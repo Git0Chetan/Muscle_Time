@@ -63,18 +63,18 @@ function join(){
   }
 }
 
-let user=document.getElementById("user");
-let owner=document.getElementById("owner");
-let trainer=document.getElementById("trainer");
+// let user=document.getElementById("user");
+// let owner=document.getElementById("owner");
+// let trainer=document.getElementById("trainer");
 
-user.addEventListener("click",function(){
-  alert("hello");
-});
+// user.addEventListener("click",function(){
+//   alert("hello");
+// });
 
-owner.addEventListener("click",function(){
-  alert("hello");
-});
+// owner.addEventListener("click",function(){
+//   alert("hello");
+// });
 
-trainer.addEventListener("click",function(){
-  alert("hello");
-});
+// trainer.addEventListener("click",function(){
+//   alert("hello");
+// });
