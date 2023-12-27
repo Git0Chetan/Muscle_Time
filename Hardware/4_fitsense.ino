@@ -1,3 +1,4 @@
+
 //esp ip address 192.168.161.102
 // rest api ip address 192.168.161.169
 
@@ -13,13 +14,13 @@
 /**** NEED TO CHANGE THIS ACCORDING TO YOUR SETUP *****/
 // The REST API endpoint - Change the IP Address
 const char *base_rest_url = "http://192.168.161.169:3000/";
-const char *base_rest_post = "http://192.168.161.169:3500/";
+String base_post = "http://192.168.161.169:3500/api/userlog";
 
 
 //SSID and Password
 const char *ssid = "Chetan's Mob";
 const char *password = "00222883";
-const char *machine_id="104";
+String machineid="111";
 
 //Wifi and http
 WiFiClient client;
@@ -45,7 +46,7 @@ Keypad keypad = Keypad(makeKeymap(keys), pin_rows, pin_column, ROW_NUM, COLUMN_N
 
 // Length of Keycode + '\0' char
 char input_keypad_code[KEYCODE_SIZE + 1];
-const char *user=" ";
+const char *keyCode_description="";
 
 bool isComplete = false;
 byte ctr = 0;
@@ -115,7 +116,7 @@ bool parseJson(String jsonDoc)
   // const char *keyCode_id = keyCode["_id"];                  // "62e89195006f4422e95cc96f"
   // const char *keyCode_keyCode = keyCode["keyCode"];         // "BC9876"
   // bool keyCode_active = keyCode["active"];                  // true
-  user = keyCode["description"]; // "Anna key code"
+  keyCode_description = keyCode["description"]; // "Anna key code"
   // const char *keyCode_createdAt = keyCode["createdAt"];     // "2022-08-02T02:53:09.096Z"
   // const char *keyCode_updatedAt = keyCode["updatedAt"];     // "2022-08-02T02:53:09.096Z"
   // int keyCode_v = keyCode["__v"];                           // 0
@@ -180,29 +181,29 @@ void clearDataArray()
 
 void sendDataToApi(String keycode)
 {
-
-  char rest_api_url[200];
-  sprintf(rest_api_url, "%sapi/userlog%s", base_rest_post);
-
-  String jsondata = "";
-  StaticJsonDocument<512> doc;
-  doc["userid"] = keycode;
-  doc["machine_id"] = machine_id;
-
-  serializeJson(doc, jsondata);
-  Serial.println("JSON Data...");
-  Serial.println(jsondata);
-
-  http.begin(client, rest_api_url);
+  Serial.println("[HTTP] POST...");
+  http.begin(client, base_post);
   http.addHeader("Content-Type", "application/json");
 
-  int httpCode = http.POST(jsondata);
+  DynamicJsonDocument jsonDoc(200);
+  jsonDoc["userid"] = keycode;
+  jsonDoc["machineid"] = machineid;
+
+  String jsonData;
+  serializeJson(jsonDoc, jsonData);
+
+  Serial.println("POST body: " + jsonData);
+
+  int httpCode = http.POST(jsonData);
+  Serial.print("HTTP Response code: ");
+  Serial.println(httpCode);
 
   if (httpCode > 0)
   {
     if (httpCode == HTTP_CODE_OK)
     {
-      Serial.printf("Ok done");
+      String payload = http.getString();
+      Serial.println("response is: " + payload);
     }
   }
   else
@@ -229,10 +230,10 @@ void keypadEvent(KeypadEvent key)
         bool isValid = checkKeyCode(input_keypad_code);
         if (isValid)
         {
-          printToLCD(user, 0, 1, false);
+          printToLCD(keyCode_description, 0, 1, false);
           delay(LCD_TIME_DELAY);
-          // sendDataToApi(input_keypad_code);
-          // delay(2000);
+          sendDataToApi(input_keypad_code);
+          delay(1000);
         }
         else
         {
@@ -288,7 +289,6 @@ void setup()
   Serial.begin(115200);
   keypad.addEventListener(keypadEvent); // Add an event listener for this keypad
   //Adjust the debounce accordingly
-  ESP.wdtEnable(65535);
   keypad.setDebounceTime(50);
 
   lcd.init();
@@ -326,12 +326,9 @@ void setup()
   printToLCD("FitSense", 1, 1, false);
   delay(1500);
   printToLCD("Input UserId:", 0, 0, true);
-
-
 }
 
 void loop()
 {
-  // Just get the key char entered in our loop
   char key = keypad.getKey();
 }
