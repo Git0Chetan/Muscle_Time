@@ -432,7 +432,18 @@ body {
 .navbar-link:is(:hover, :focus, .active) { color: var(--rich-black-fogra-29-1); }
 
 
-
+.join{
+  display: none;
+  
+}
+.join ul li{
+  background-color: rgb(6, 6, 6);
+  color: orangered;
+  border: 2px solid white;
+  border-radius: 10px;
+  margin:3%;
+  width: 120%;
+}
 
 
 /*-----------------------------------*\
@@ -989,6 +1000,10 @@ body {
     padding-inline: 30px;
   }
 
+  .jj{
+    display: block;
+  }
+
 
 
   /**
@@ -1381,17 +1396,4 @@ body {
 
   .footer-top .container { grid-template-columns: 1fr 0.6fr 0.9fr 1fr; }
 
-}
-
-.join{
-  display: none;
-  
-}
-.join ul li{
-  background-color: rgb(6, 6, 6);
-  color: orangered;
-  border: 2px solid white;
-  border-radius: 10px;
-  margin:3%;
-  width: 120%;
 }
